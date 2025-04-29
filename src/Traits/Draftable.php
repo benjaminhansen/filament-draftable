@@ -57,7 +57,7 @@ trait Draftable
                     }
 
                     // remove the cookie, just for good measure
-                    Cookie::forget($storageKey);
+                    Cookie::queue(Cookie::forget($storageKey));
 
                     // Send a success notification because we loaded the draft
                     Notification::make()
