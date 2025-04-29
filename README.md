@@ -44,6 +44,10 @@ class CreatePost extends CreateRecord
             $this->loadDraftAction(),
                 // ->icon('')
                 // ->label('')
+
+            $this->deleteDraftAction(),
+                // ->icon('')
+                // ->label('')
         ]
     }
 }

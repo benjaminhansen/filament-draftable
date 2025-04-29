@@ -70,4 +70,29 @@ trait Draftable
                 }
             });
     }
+
+    public function deleteDraftAction(): Action
+    {
+        // the key will be the slug of the current URL
+        $storageKey = str_slug($this->getUrl());
+
+        return Action::make('draftableDelete')
+            ->label(__('Delete Draft'))
+            ->icon('heroicon-o-trash')
+            ->action(function() use ($storageKey) {
+                if(Cookie::has($storageKey)) {
+                    Cookie::queue(Cookie::forget($storageKey));
+
+                    Notification::make()
+                        ->title(__('Draft deleted'))
+                        ->success()
+                        ->send();
+                } else {
+                    Notification::make()
+                        ->title(__('No draft available to delete'))
+                        ->warning()
+                        ->send();
+                }
+            });
+    }
 }
