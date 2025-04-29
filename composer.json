@@ -1,0 +1,25 @@
+{
+    "name": "benjaminhansen/filament-draftable",
+    "description": "Provides a draftable interface to save long forms to the browser's local storage",
+    "type": "package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "BJ Hansen",
+            "email": "bjhansen@benjaminhansen.net"
+        }
+    ],
+    "require": {
+        "laravel/helpers": "^1.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "BenjaminHansen\\FilamentDraftable\\": "src/"
+        }
+    },
+    "require-dev": {
+        "laravel/pint": "^1.22"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
