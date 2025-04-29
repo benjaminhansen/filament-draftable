@@ -9,12 +9,13 @@ use Illuminate\Support\Facades\Cookie;
 trait Draftable
 {
     public ?array $excludeFromDraft = [];
+
     public ?int $saveDraftFor = null;
 
-    public function saveDraft(): Action
+    public function saveDraftAction(): Action
     {
         // the key will be the slug of the current URL
-        $storageKey = str_slug($this->getUrl());
+        $storageKey = str_slug(request()->fullUrl());
         $data = $this->data;
         $data_to_store = array_diff_key($data, array_flip($this->excludeFromDraft));
         $state = json_encode($data_to_store);
@@ -34,10 +35,10 @@ trait Draftable
             });
     }
 
-    public function loadDraft(): Action
+    public function loadDraftAction(): Action
     {
         // the key will be the slug of the current URL
-        $storageKey = str_slug($this->getUrl());
+        $storageKey = str_slug(request()->fullUrl());
 
         return Action::make('draftableLoad')
             ->label('Load Draft')
@@ -64,6 +65,6 @@ trait Draftable
                         ->send();
                 }
             })
-            ->disabled(fn() => ! Cookie::has($storageKey));
+            ->disabled(fn () => ! Cookie::has($storageKey));
     }
 }

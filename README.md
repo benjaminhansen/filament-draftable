@@ -37,11 +37,11 @@ class CreatePost extends CreateRecord
 
             // append the draftable actions
             // we can use all of Filament's Action methods to customize the draftable actions
-            $this->saveDraft(),
+            $this->saveDraftAction(),
                 // ->icon('')
                 // ->label('')
 
-            $this->loadDraft(),
+            $this->loadDraftAction(),
                 // ->icon('')
                 // ->label('')
         ]
