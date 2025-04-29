@@ -1,6 +1,6 @@
 {
     "name": "benjaminhansen/filament-draftable",
-    "description": "Provides a draftable interface to save long forms to the browser's local storage",
+    "description": "Provides a draftable interface to save long forms as a draft in a browser cookie.",
     "type": "package",
     "license": "MIT",
     "authors": [
