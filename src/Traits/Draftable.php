@@ -64,8 +64,6 @@ trait Draftable
                         ->send();
                 }
             })
-            ->disabled(function () use ($storageKey) {
-                return ! Cookie::has($storageKey);
-            });
+            ->disabled(fn() => ! Cookie::has($storageKey));
     }
 }
