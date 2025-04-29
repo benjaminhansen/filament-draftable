@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Cookie;
 trait Draftable
 {
     public ?array $excludedFields = [];
+    public ?int $saveDraftFor = null;
 
     public function saveDraft(): Action
     {
@@ -23,7 +24,7 @@ trait Draftable
             ->icon('heroicon-o-check')
             ->action(function () use ($storageKey, $state) {
                 // store in a cookie
-                Cookie::queue($storageKey, $state, 9999999);
+                Cookie::queue($storageKey, $state, $this->saveDraftFor ?? 9999999);
 
                 // Send a notification
                 Notification::make()
@@ -52,6 +53,9 @@ trait Draftable
                             $this->data[$key] = $value;
                         }
                     }
+
+                    // remove the cookie
+                    Cookie::forget($storageKey);
 
                     // Send a notification
                     Notification::make()
