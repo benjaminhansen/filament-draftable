@@ -30,7 +30,7 @@ trait Draftable
 
                 // Send a notification
                 Notification::make()
-                    ->title(__('Draft Saved'))
+                    ->title(__('Draft saved'))
                     ->success()
                     ->send();
             });
@@ -48,19 +48,27 @@ trait Draftable
                 // get the draft data from the cookie
                 if ($data = Cookie::get($storageKey)) {
                     $parsed = json_decode($data, true);
+
+                    // load the draft data back into the data object of the form
                     foreach ($parsed as $key => $value) {
                         if (array_key_exists($key, $this->data)) {
                             $this->data[$key] = $value;
                         }
                     }
 
-                    // remove the cookie
+                    // remove the cookie, just for good measure
                     Cookie::forget($storageKey);
 
-                    // Send a notification
+                    // Send a success notification because we loaded the draft
                     Notification::make()
-                        ->title(__('Draft Loaded'))
+                        ->title(__('Draft loaded'))
                         ->success()
+                        ->send();
+                } else {
+                    // send a warning notification because we have no draft to load
+                    Notification::make()
+                        ->title(__('No draft available to load'))
+                        ->warning()
                         ->send();
                 }
             });
