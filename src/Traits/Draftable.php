@@ -15,10 +15,7 @@ trait Draftable
     public function saveDraftAction(): Action
     {
         // the key will be the slug of the current URL
-        $url = $this->getUrl([
-            'group_id' => request()->group_id,
-            'employee_id' => request()->employee_id,
-        ]);
+        $url = $this->getUrl();
         $storageKey = str_slug($url);
         $data = $this->data;
         $data_to_store = array_diff_key($data, array_flip($this->excludeFromDraft));
@@ -42,10 +39,7 @@ trait Draftable
     public function loadDraftAction(): Action
     {
         // the key will be the slug of the current URL
-        $url = $this->getUrl([
-            'group_id' => request()->group_id,
-            'employee_id' => request()->employee_id,
-        ]);
+        $url = $this->getUrl();
         $storageKey = str_slug($url);
 
         return Action::make('draftableLoad')
@@ -72,7 +66,6 @@ trait Draftable
                         ->success()
                         ->send();
                 }
-            })
-            ->disabled(fn () => ! Cookie::has($storageKey));
+            });
     }
 }
