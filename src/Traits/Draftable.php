@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Cookie;
 
 trait Draftable
 {
-    public ?array $excludedFields = [];
+    public ?array $excludeFromDraft = [];
     public ?int $saveDraftFor = null;
 
     public function saveDraft(): Action
@@ -16,7 +16,7 @@ trait Draftable
         // the key will be the slug of the current URL
         $storageKey = str_slug($this->getUrl());
         $data = $this->data;
-        $data_to_store = array_diff_key($data, array_flip($this->excludedFields));
+        $data_to_store = array_diff_key($data, array_flip($this->excludeFromDraft));
         $state = json_encode($data_to_store);
 
         return Action::make('draftableSave')
