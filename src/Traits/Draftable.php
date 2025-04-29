@@ -56,9 +56,6 @@ trait Draftable
                         }
                     }
 
-                    // remove the cookie, just for good measure
-                    Cookie::queue(Cookie::forget($storageKey));
-
                     // Send a success notification because we loaded the draft
                     Notification::make()
                         ->title(__('Draft loaded'))
@@ -71,7 +68,6 @@ trait Draftable
                         ->warning()
                         ->send();
                 }
-            })
-            ->disabled(fn () => ! Cookie::has($storageKey));
+            });
     }
 }
