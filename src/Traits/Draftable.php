@@ -71,6 +71,7 @@ trait Draftable
                         ->warning()
                         ->send();
                 }
-            });
+            })
+            ->disabled(fn () => ! Cookie::has($storageKey));
     }
 }
