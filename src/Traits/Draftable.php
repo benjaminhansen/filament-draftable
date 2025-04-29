@@ -8,29 +8,29 @@ use Illuminate\Support\Facades\Cookie;
 
 trait Draftable
 {
+    // keys that should be excluded from being saved in the draft
     public ?array $excludeFromDraft = [];
 
-    public ?int $saveDraftFor = null;
+    // the number of seconds we should set the cookie to be valid for
+    public int $saveDraftFor = 9999999;
 
     public function saveDraftAction(): Action
     {
         // the key will be the slug of the current URL
-        $url = $this->getUrl();
-        $storageKey = str_slug($url);
-        $data = $this->data;
-        $data_to_store = array_diff_key($data, array_flip($this->excludeFromDraft));
+        $storageKey = str_slug($this->getUrl());
+        $data_to_store = array_diff_key($this->data, array_flip($this->excludeFromDraft));
         $state = json_encode($data_to_store);
 
         return Action::make('draftableSave')
-            ->label('Save Draft')
+            ->label(__('Save Draft'))
             ->icon('heroicon-o-check')
             ->action(function () use ($storageKey, $state) {
                 // store in a cookie
-                Cookie::queue($storageKey, $state, $this->saveDraftFor ?? 9999999);
+                Cookie::queue($storageKey, $state, $this->saveDraftFor);
 
                 // Send a notification
                 Notification::make()
-                    ->title('Draft Saved')
+                    ->title(__('Draft Saved'))
                     ->success()
                     ->send();
             });
@@ -39,17 +39,14 @@ trait Draftable
     public function loadDraftAction(): Action
     {
         // the key will be the slug of the current URL
-        $url = $this->getUrl();
-        $storageKey = str_slug($url);
+        $storageKey = str_slug($this->getUrl());
 
         return Action::make('draftableLoad')
-            ->label('Load Draft')
+            ->label(__('Load Draft'))
             ->icon('heroicon-o-arrow-up-tray')
             ->action(function () use ($storageKey) {
                 // get the draft data from the cookie
-                $data = Cookie::get($storageKey);
-
-                if ($data) {
+                if ($data = Cookie::get($storageKey)) {
                     $parsed = json_decode($data, true);
                     foreach ($parsed as $key => $value) {
                         if (array_key_exists($key, $this->data)) {
@@ -62,7 +59,7 @@ trait Draftable
 
                     // Send a notification
                     Notification::make()
-                        ->title('Draft Loaded')
+                        ->title(__('Draft Loaded'))
                         ->success()
                         ->send();
                 }

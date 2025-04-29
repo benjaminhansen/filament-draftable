@@ -25,8 +25,8 @@ class CreatePost extends CreateRecord
     // add exclusions to this array to prevent them from being saved in the draft
     public ?array $excludeFromDraft = ['password'];
 
-    // set how long the cookie should be valid for
-    public ?int $saveDraftFor = 3600;
+    // set how long the cookie should be valid for (in seconds)
+    public int $saveDraftFor = 3600;
 
     // add/modify this method
     protected function getFormActions(): array
