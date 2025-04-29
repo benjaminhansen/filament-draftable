@@ -1,4 +1,7 @@
-# filament-draftable
+# Filament Draftable
+
+Provides a <code>Draftable</code> trait that you can add to your Resource pages to allow saving data as a draft.
+All data is stored in a Laravel-encrypted browser cookie.
 
 ## Installation
 
