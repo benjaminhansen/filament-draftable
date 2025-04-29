@@ -48,6 +48,7 @@ class CreatePost extends CreateRecord
             $this->deleteDraftAction(),
                 // ->icon('')
                 // ->label('')
+                // ->requiresConfirmation()
         ]
     }
 }
