@@ -84,7 +84,7 @@ trait Draftable
         $draft = json_decode($draft, true);
 
         // load the draft data back into the data object of the form
-        foreach ($parsed as $key => $value) {
+        foreach ($draft as $key => $value) {
             if (array_key_exists($key, $this->data)) {
                 $this->data[$key] = $value;
             }
