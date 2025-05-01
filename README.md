@@ -1,7 +1,7 @@
 # Filament Draftable
 
 Provides a <code>Draftable</code> trait that you can add to your Resource pages to allow saving data as a draft.
-All data is stored in a Laravel-encrypted browser cookie.
+All data is stored in your browser's localStorage and is encrypted using Laravel's encryption.
 
 ## Installation
 
@@ -27,9 +27,6 @@ class CreatePost extends CreateRecord
 
     // add exclusions to this array to prevent them from being saved in the draft
     public ?array $excludeFromDraft = ['password'];
-
-    // set how long the cookie should be valid for (in seconds)
-    public int $saveDraftFor = 3600;
 
     // add/modify this method
     protected function getFormActions(): array
