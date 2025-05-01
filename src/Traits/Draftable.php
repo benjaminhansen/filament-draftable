@@ -89,10 +89,5 @@ trait Draftable
                 $this->data[$key] = $value;
             }
         }
-
-        Notification::make()
-            ->title(__('Draft loaded'))
-            ->success()
-            ->send();
     }
 }
